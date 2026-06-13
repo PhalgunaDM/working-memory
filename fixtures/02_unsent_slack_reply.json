@@ -1,0 +1,28 @@
+{
+  "fixture_id": "02_unsent_slack_reply",
+  "description": "Positive: half-written reply abandoned when a meeting starts. Draft text must be preserved verbatim.",
+  "session": {
+    "user_goals": [],
+    "observations": [
+      { "i": 0, "t": "2026-06-13T13:55:00Z", "event": "app_focus", "app": "Slack", "window_title": "Priya Sharma (DM) - Acme", "screen_text": "Priya 1:48 PM: Hey, where are we on the onboarding revamp? Leadership review moved to Thursday and I need a realistic date from you." },
+      { "i": 1, "t": "2026-06-13T13:56:20Z", "event": "input_burst", "app": "Slack", "window_title": "Priya Sharma (DM) - Acme", "screen_text": "Message field (unsent): Sorry for the slow reply — the migration ate this week. Honest status: flows 1 and 2 are done, flow 3 is half-built. I think a realistic date is" },
+      { "i": 2, "t": "2026-06-13T13:58:00Z", "event": "app_focus", "app": "zoom.us", "window_title": "Zoom Meeting - Design weekly", "screen_text": "Design weekly · Recording · 6 participants" },
+      { "i": 3, "t": "2026-06-13T14:42:00Z", "event": "app_focus", "app": "Safari", "window_title": "Figma - onboarding flow 3", "url": "https://www.figma.com/file/xyz/onboarding-flow-3", "screen_text": "onboarding flow 3 · last edited 2 days ago" }
+    ]
+  },
+  "expected": {
+    "open_loops": [
+      {
+        "intent_gold": "Send Priya the reply about the onboarding revamp status with a realistic date",
+        "intent_must_include": ["Priya", "reply"],
+        "category": "communication_draft",
+        "progress_must_include": ["unsent", "realistic date"],
+        "artifacts_must_include_urls": [],
+        "draft_must_be_preserved": "flows 1 and 2 are done, flow 3 is half-built",
+        "deadline": "2026-06-18",
+        "next_action_keywords": ["send", "finish", "date"]
+      }
+    ],
+    "must_not_detect": ["the Zoom meeting as a loop", "opening Figma as a completed reply"]
+  }
+}

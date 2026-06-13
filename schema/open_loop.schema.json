@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "openloops/open_loop.schema.json",
+  "title": "OpenLoop",
+  "type": "object",
+  "required": ["id", "intent", "category", "progress_state", "artifacts", "next_action", "confidence", "evidence", "created_at"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string", "description": "UUID" },
+    "intent": {
+      "type": "string",
+      "description": "One sentence, user-voiced, specific. e.g. 'Book round-trip flights SFO to LAX for July 10-13'. Never generic ('browsing travel sites')."
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "purchase_or_booking",
+        "communication_draft",
+        "commitment_to_person",
+        "form_or_application",
+        "research",
+        "payment_or_admin",
+        "work_artifact"
+      ]
+    },
+    "progress_state": {
+      "type": "string",
+      "description": "Where exactly the user stopped, with the concrete facts observed: options compared, prices seen, step reached, text written. 1-3 sentences."
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "urls": { "type": "array", "items": { "type": "string", "format": "uri" } },
+        "draft_text": { "type": ["string", "null"], "description": "Verbatim preserved draft, if any." },
+        "key_facts": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Atomic facts needed to resume: '$178 Southwest itinerary', 'Dr. Chen — best reviews, insurance unverified'."
+        }
+      },
+      "required": ["urls", "key_facts"]
+    },
+    "next_action": {
+      "type": "string",
+      "description": "The single concrete next step, phrased as an action the user (or Tier 3 prep) can take."
+    },
+    "prepared_advance": {
+      "type": ["object", "null"],
+      "description": "Tier 3 output awaiting user approval. Null if none.",
+      "additionalProperties": false,
+      "properties": {
+        "kind": { "type": "string", "enum": ["completed_draft", "comparison_summary", "research_summary", "calendar_proposal"] },
+        "content": { "type": "string" }
+      },
+      "required": ["kind", "content"]
+    },
+    "deadline": {
+      "type": ["string", "null"],
+      "description": "ISO 8601 date or datetime if a deadline was observed or directly inferable; otherwise null. Never invent one."
+    },
+    "deadline_source": {
+      "type": ["string", "null"],
+      "description": "Verbatim text the deadline was extracted from, e.g. 'expires Aug 3, 2026'. Required when deadline is non-null."
+    },
+    "resume_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "primary_url": { "type": ["string", "null"] },
+        "app": { "type": ["string", "null"], "description": "App to reopen, for non-web loops" },
+        "instructions": { "type": ["string", "null"], "description": "Human-readable 'pick up exactly here' note" }
+      }
+    },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+    "evidence": {
+      "type": "array",
+      "items": { "type": "integer" },
+      "minItems": 1,
+      "description": "Indices of session observations supporting this loop."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["open", "scheduled", "resumed", "done", "dismissed"],
+      "default": "open"
+    },
+    "created_at": { "type": "string", "format": "date-time" }
+  }
+}

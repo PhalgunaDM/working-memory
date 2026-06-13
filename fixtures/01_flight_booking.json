@@ -1,0 +1,30 @@
+{
+  "fixture_id": "01_flight_booking",
+  "description": "Canonical positive: multi-window flight search abandoned before checkout. Trailing YouTube must not become a loop.",
+  "session": {
+    "user_goals": ["plan LA trip in July"],
+    "observations": [
+      { "i": 0, "t": "2026-06-13T10:02:00Z", "event": "app_focus", "app": "Safari", "window_title": "Google Flights", "url": "https://www.google.com/travel/flights?q=SFO%20to%20LAX", "screen_text": "Round trip · 1 passenger · Economy · SFO San Francisco → LAX Los Angeles · Depart Fri, Jul 10 · Return Mon, Jul 13 · Best departing flights: United 7:15 AM $214 · Southwest 8:05 AM $178 · Delta 9:40 AM $231" },
+      { "i": 1, "t": "2026-06-13T10:04:10Z", "event": "app_focus", "app": "Calendar", "window_title": "Calendar - July 2026", "screen_text": "July 2026 · Fri Jul 10: no events · Mon Jul 13: 9:00 AM Team standup" },
+      { "i": 2, "t": "2026-06-13T10:05:00Z", "event": "app_focus", "app": "Messages", "window_title": "Dee", "screen_text": "You: landing Friday morning work for you guys? Dee: yes!! come before noon if you can" },
+      { "i": 3, "t": "2026-06-13T10:06:30Z", "event": "text_snapshot", "app": "Safari", "window_title": "Southwest Airlines - Select flight", "url": "https://www.southwest.com/air/booking/select.html", "screen_text": "SFO → LAX Fri Jul 10 · Flight 1432 8:05 AM - 9:35 AM · Wanna Get Away $178 selected · LAX → SFO Mon Jul 13 · Flight 2210 6:20 PM · Continue to passenger info" },
+      { "i": 4, "t": "2026-06-13T10:07:05Z", "event": "app_focus", "app": "Slack", "window_title": "#incidents - Acme", "screen_text": "@here prod API latency spiking, who's on call? thread (14 replies)" },
+      { "i": 5, "t": "2026-06-13T10:38:00Z", "event": "app_focus", "app": "Safari", "window_title": "YouTube", "url": "https://www.youtube.com/watch?v=abc123", "screen_text": "Lo-fi beats to debug to · 1.2M views" }
+    ]
+  },
+  "expected": {
+    "open_loops": [
+      {
+        "intent_gold": "Book round-trip flights SFO to LAX for July 10-13",
+        "intent_must_include": ["SFO", "LAX", "Jul"],
+        "category": "purchase_or_booking",
+        "progress_must_include": ["Southwest", "$178", "passenger"],
+        "artifacts_must_include_urls": ["https://www.southwest.com/air/booking/select.html"],
+        "draft_must_be_preserved": null,
+        "deadline": null,
+        "next_action_keywords": ["checkout", "passenger", "book", "complete"]
+      }
+    ],
+    "must_not_detect": ["YouTube browsing as a loop", "Slack incident response as a user loop", "messaging Dee as a separate loop (it is evidence for the flight loop)"]
+  }
+}

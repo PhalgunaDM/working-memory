@@ -1,0 +1,29 @@
+{
+  "fixture_id": "05_pediatrician_research",
+  "description": "Positive: multi-tab research with partial findings; loop must capture candidates found and the unverified question.",
+  "session": {
+    "user_goals": ["find pediatrician for Maya"],
+    "observations": [
+      { "i": 0, "t": "2026-06-13T09:10:00Z", "event": "app_focus", "app": "Safari", "window_title": "pediatricians santa clara accepting new patients - Google Search", "url": "https://www.google.com/search?q=pediatricians+santa+clara+accepting+new+patients", "screen_text": "Results: Dr. Emily Chen Pediatrics 4.9 (212) · Sunnyvale Kids Clinic 4.6 (98) · Dr. Raj Patel 4.7 (150)" },
+      { "i": 1, "t": "2026-06-13T09:14:00Z", "event": "text_snapshot", "app": "Safari", "window_title": "Dr. Emily Chen, MD - Reviews", "url": "https://www.example-health.com/dr-emily-chen", "screen_text": "Dr. Emily Chen · 4.9 stars · 'wonderful with anxious toddlers' · Accepting new patients · Insurance: call office to verify" },
+      { "i": 2, "t": "2026-06-13T09:17:00Z", "event": "text_snapshot", "app": "Safari", "window_title": "Sunnyvale Kids Clinic", "url": "https://www.sunnyvalekidsclinic.com/", "screen_text": "Sunnyvale Kids Clinic · accepting new patients · in-network: Aetna, Blue Shield" },
+      { "i": 3, "t": "2026-06-13T09:18:20Z", "event": "app_focus", "app": "zoom.us", "window_title": "Zoom Meeting - 1:1 with manager", "screen_text": "1:1 · 2 participants" },
+      { "i": 4, "t": "2026-06-13T10:05:00Z", "event": "app_focus", "app": "Mail", "window_title": "Inbox", "screen_text": "Inbox · composing nothing" }
+    ]
+  },
+  "expected": {
+    "open_loops": [
+      {
+        "intent_gold": "Choose a pediatrician for Maya near Santa Clara — three candidates found, insurance unverified for Dr. Chen",
+        "intent_must_include": ["pediatrician"],
+        "category": "research",
+        "progress_must_include": ["Chen", "insurance"],
+        "artifacts_must_include_urls": ["https://www.example-health.com/dr-emily-chen"],
+        "draft_must_be_preserved": null,
+        "deadline": null,
+        "next_action_keywords": ["insurance", "call", "verify", "decide"]
+      }
+    ],
+    "must_not_detect": ["the 1:1 meeting as a loop", "checking Mail as a loop"]
+  }
+}

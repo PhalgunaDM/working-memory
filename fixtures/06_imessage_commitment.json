@@ -1,0 +1,28 @@
+{
+  "fixture_id": "06_imessage_commitment",
+  "description": "Positive: the loop is a promise made to a person ('I'll send you X tomorrow'), not an activity. No send observed. Deadline inferred from 'tomorrow' relative to observation timestamps.",
+  "session": {
+    "user_goals": [],
+    "observations": [
+      { "i": 0, "t": "2026-06-13T16:40:00Z", "event": "app_focus", "app": "Messages", "window_title": "Alex Romero", "screen_text": "Alex: did you ever finish the budget doc for the offsite? You: almost! I'll send it to you tomorrow Alex: 🙏" },
+      { "i": 1, "t": "2026-06-13T16:41:10Z", "event": "app_focus", "app": "Safari", "window_title": "Twitter / X", "url": "https://x.com/home", "screen_text": "Home timeline" },
+      { "i": 2, "t": "2026-06-13T17:30:00Z", "event": "app_focus", "app": "Numbers", "window_title": "Offsite budget.numbers", "screen_text": "Offsite budget · Catering tab: TODO · Total row: #REF! error" },
+      { "i": 3, "t": "2026-06-13T17:36:00Z", "event": "app_focus", "app": "Safari", "window_title": "YouTube", "url": "https://www.youtube.com/", "screen_text": "Home" }
+    ]
+  },
+  "expected": {
+    "open_loops": [
+      {
+        "intent_gold": "Send Alex the offsite budget doc by tomorrow (promised in iMessage); doc still has TODO and a #REF! error",
+        "intent_must_include": ["Alex", "budget"],
+        "category": "commitment_to_person",
+        "progress_must_include": ["promised", "TODO"],
+        "artifacts_must_include_urls": [],
+        "draft_must_be_preserved": null,
+        "deadline": "2026-06-14",
+        "next_action_keywords": ["send", "finish", "fix"]
+      }
+    ],
+    "must_not_detect": ["Twitter browsing as a loop", "YouTube as a loop"]
+  }
+}

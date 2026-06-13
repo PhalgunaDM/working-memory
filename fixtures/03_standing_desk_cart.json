@@ -1,0 +1,30 @@
+{
+  "fixture_id": "03_standing_desk_cart",
+  "description": "Positive: 20-minute comparison-shopping thread, item in cart, abandoned. Tier 3 comparison-summary opportunity.",
+  "session": {
+    "user_goals": ["set up home office"],
+    "observations": [
+      { "i": 0, "t": "2026-06-13T19:01:00Z", "event": "app_focus", "app": "Safari", "window_title": "Best standing desks 2026 - Wirecutter", "url": "https://www.nytimes.com/wirecutter/reviews/best-standing-desks/", "screen_text": "Top pick: Uplift V2 · Runner-up: Fully Jarvis · Budget: Flexispot EN1" },
+      { "i": 1, "t": "2026-06-13T19:06:00Z", "event": "text_snapshot", "app": "Safari", "window_title": "UPLIFT V2 Standing Desk", "url": "https://www.upliftdesk.com/uplift-v2-standing-desk/", "screen_text": "UPLIFT V2 · 48x30 bamboo · $599 · ships in 3-5 days · 15-year warranty" },
+      { "i": 2, "t": "2026-06-13T19:11:00Z", "event": "text_snapshot", "app": "Safari", "window_title": "Jarvis Bamboo Standing Desk - Fully", "url": "https://www.fully.com/jarvis-adjustable-height-desk-bamboo.html", "screen_text": "Jarvis bamboo 48x30 · $549 · 15-year warranty · ships in 7-10 days" },
+      { "i": 3, "t": "2026-06-13T19:15:30Z", "event": "text_snapshot", "app": "Safari", "window_title": "Cart - UPLIFT Desk", "url": "https://www.upliftdesk.com/cart/", "screen_text": "Cart (1 item): UPLIFT V2 48x30 bamboo $599 · Subtotal $599 · Checkout" },
+      { "i": 4, "t": "2026-06-13T19:16:10Z", "event": "app_focus", "app": "FaceTime", "window_title": "Mom", "screen_text": "FaceTime call with Mom · 00:43" },
+      { "i": 5, "t": "2026-06-13T19:52:00Z", "event": "app_focus", "app": "Mail", "window_title": "Inbox", "screen_text": "Inbox · 14 unread" }
+    ]
+  },
+  "expected": {
+    "open_loops": [
+      {
+        "intent_gold": "Buy a standing desk — decided between Uplift V2 and Fully Jarvis, Uplift V2 in cart",
+        "intent_must_include": ["standing desk"],
+        "category": "purchase_or_booking",
+        "progress_must_include": ["Uplift V2", "$599", "cart"],
+        "artifacts_must_include_urls": ["https://www.upliftdesk.com/cart/"],
+        "draft_must_be_preserved": null,
+        "deadline": null,
+        "next_action_keywords": ["checkout", "decide", "buy"]
+      }
+    ],
+    "must_not_detect": ["the FaceTime call as a loop", "checking Mail as a loop"]
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "fixture_id": "08_rapid_tab_flipping",
+  "description": "Negative: restless flipping between apps with no coherent intent. Zero loops expected. Tests notification restraint.",
+  "session": {
+    "user_goals": [],
+    "observations": [
+      { "i": 0, "t": "2026-06-13T15:00:00Z", "event": "app_focus", "app": "Safari", "window_title": "Hacker News", "url": "https://news.ycombinator.com/", "screen_text": "Top stories" },
+      { "i": 1, "t": "2026-06-13T15:00:25Z", "event": "app_focus", "app": "Slack", "window_title": "#random - Acme", "screen_text": "meme thread" },
+      { "i": 2, "t": "2026-06-13T15:00:50Z", "event": "app_focus", "app": "Mail", "window_title": "Inbox", "screen_text": "Inbox · 14 unread" },
+      { "i": 3, "t": "2026-06-13T15:01:15Z", "event": "app_focus", "app": "Safari", "window_title": "Twitter / X", "url": "https://x.com/home", "screen_text": "Home timeline" },
+      { "i": 4, "t": "2026-06-13T15:01:40Z", "event": "app_focus", "app": "Messages", "window_title": "Group: roomies", "screen_text": "scrolling old messages" },
+      { "i": 5, "t": "2026-06-13T15:02:05Z", "event": "app_focus", "app": "Safari", "window_title": "Hacker News", "url": "https://news.ycombinator.com/", "screen_text": "Top stories" },
+      { "i": 6, "t": "2026-06-13T15:02:30Z", "event": "app_focus", "app": "Spotify", "window_title": "Spotify", "screen_text": "Daily Mix 1" }
+    ]
+  },
+  "expected": {
+    "open_loops": [],
+    "must_not_detect": ["any loop — this entire session is incoherent browsing noise"]
+  }
+}

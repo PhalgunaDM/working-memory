@@ -1,0 +1,29 @@
+{
+  "fixture_id": "04_global_entry_form",
+  "description": "Positive: multi-step application abandoned at a hard field; explicit deadline on screen must be extracted exactly.",
+  "session": {
+    "user_goals": [],
+    "observations": [
+      { "i": 0, "t": "2026-06-13T11:20:00Z", "event": "app_focus", "app": "Safari", "window_title": "Trusted Traveler Programs - Login", "url": "https://ttp.cbp.dhs.gov/", "screen_text": "Trusted Traveler Programs · Log in with Login.gov" },
+      { "i": 1, "t": "2026-06-13T11:24:00Z", "event": "text_snapshot", "app": "Safari", "window_title": "Global Entry Renewal - Step 2 of 5", "url": "https://ttp.cbp.dhs.gov/application/renewal", "screen_text": "Global Entry Renewal · Your membership expires Aug 3, 2026 · Step 2 of 5: Employment history · List employers for the last 5 years · Employer 1: ___ · Save and continue" },
+      { "i": 2, "t": "2026-06-13T11:27:40Z", "event": "app_focus", "app": "Safari", "window_title": "LinkedIn", "url": "https://www.linkedin.com/in/me", "screen_text": "Experience: Acme Corp 2023-present · Beta Inc 2020-2023" },
+      { "i": 3, "t": "2026-06-13T11:28:30Z", "event": "app_focus", "app": "Slack", "window_title": "#general - Acme", "screen_text": "lunch orders close in 5 min!" },
+      { "i": 4, "t": "2026-06-13T12:10:00Z", "event": "app_focus", "app": "Xcode", "window_title": "MyApp.xcodeproj", "screen_text": "Build succeeded" }
+    ]
+  },
+  "expected": {
+    "open_loops": [
+      {
+        "intent_gold": "Finish the Global Entry renewal application (stopped at step 2 of 5, employment history)",
+        "intent_must_include": ["Global Entry", "renewal"],
+        "category": "form_or_application",
+        "progress_must_include": ["step 2 of 5", "employment history"],
+        "artifacts_must_include_urls": ["https://ttp.cbp.dhs.gov/application/renewal"],
+        "draft_must_be_preserved": null,
+        "deadline": "2026-08-03",
+        "next_action_keywords": ["employment", "step", "complete", "finish"]
+      }
+    ],
+    "must_not_detect": ["checking LinkedIn as a separate loop (it is evidence: looking up employment dates)", "lunch orders as a loop"]
+  }
+}

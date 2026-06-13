@@ -1,0 +1,17 @@
+{
+  "fixture_id": "09_email_sent_complete",
+  "description": "Negative: an email is drafted, the user briefly switches away, then returns and SENDS it. Completion signal observed — no loop at session end.",
+  "session": {
+    "user_goals": [],
+    "observations": [
+      { "i": 0, "t": "2026-06-13T14:00:00Z", "event": "app_focus", "app": "Mail", "window_title": "Re: Contract renewal - Draft", "screen_text": "To: sarah@vendorco.com · Draft: Hi Sarah, confirming we'd like to renew at the current rate through 2027. Please send the paperwork." },
+      { "i": 1, "t": "2026-06-13T14:01:10Z", "event": "app_focus", "app": "Safari", "window_title": "Acme wiki - vendor contracts", "url": "https://wiki.acme.com/vendor-contracts", "screen_text": "VendorCo: current rate $4,200/yr, renewal window open" },
+      { "i": 2, "t": "2026-06-13T14:02:30Z", "event": "app_focus", "app": "Mail", "window_title": "Re: Contract renewal", "screen_text": "Message sent · Re: Contract renewal moved to Sent" },
+      { "i": 3, "t": "2026-06-13T14:03:00Z", "event": "app_focus", "app": "Xcode", "window_title": "MyApp.xcodeproj", "screen_text": "editing AppDelegate.swift" }
+    ]
+  },
+  "expected": {
+    "open_loops": [],
+    "must_not_detect": ["the Sarah email as a loop — it was sent (completion signal at observation 2)", "the wiki lookup as a loop (it was evidence, and the parent task completed)"]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "fixture_id": "10_loop_reopened_and_closed",
+  "description": "Stateful negative: a hotel booking is abandoned (would be a loop mid-session), but the user returns 50 minutes later and completes checkout. Final state must contain zero loops — a transient candidate must be retracted on the completion signal.",
+  "session": {
+    "user_goals": ["plan LA trip in July"],
+    "observations": [
+      { "i": 0, "t": "2026-06-13T12:00:00Z", "event": "app_focus", "app": "Safari", "window_title": "Hotels in Santa Monica - Booking.com", "url": "https://www.booking.com/searchresults.html?ss=Santa+Monica", "screen_text": "Jul 10 - Jul 13 · Ocean View Hotel $189/night · Sea Blue Inn $164/night" },
+      { "i": 1, "t": "2026-06-13T12:04:00Z", "event": "text_snapshot", "app": "Safari", "window_title": "Sea Blue Inn - Booking.com", "url": "https://www.booking.com/hotel/us/sea-blue-inn.html", "screen_text": "Sea Blue Inn · Queen room Jul 10-13 · $492 total · Reserve" },
+      { "i": 2, "t": "2026-06-13T12:05:30Z", "event": "app_focus", "app": "Slack", "window_title": "#eng - Acme", "screen_text": "code review requests piling up" },
+      { "i": 3, "t": "2026-06-13T12:55:00Z", "event": "app_focus", "app": "Safari", "window_title": "Sea Blue Inn - Checkout - Booking.com", "url": "https://www.booking.com/book.html", "screen_text": "Payment details · Visa ending 4821 · Complete booking" },
+      { "i": 4, "t": "2026-06-13T12:57:10Z", "event": "text_snapshot", "app": "Safari", "window_title": "Booking confirmed - Booking.com", "url": "https://www.booking.com/confirmation.html", "screen_text": "Booking confirmed! Sea Blue Inn · Jul 10-13 · Confirmation #88412 sent to your email" },
+      { "i": 5, "t": "2026-06-13T13:10:00Z", "event": "app_focus", "app": "Slack", "window_title": "#eng - Acme", "screen_text": "reviewing PR #441" }
+    ]
+  },
+  "expected": {
+    "open_loops": [],
+    "must_not_detect": ["the hotel booking as a loop at session end — it was completed at observation 4; a transient candidate created around 12:05-12:55 must be retracted"]
+  }
+}

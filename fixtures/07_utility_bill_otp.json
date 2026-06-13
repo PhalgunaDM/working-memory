@@ -1,0 +1,28 @@
+{
+  "fixture_id": "07_utility_bill_otp",
+  "description": "Positive: tiny admin task abandoned at the OTP wall; due date on screen must be extracted.",
+  "session": {
+    "user_goals": [],
+    "observations": [
+      { "i": 0, "t": "2026-06-13T08:15:00Z", "event": "app_focus", "app": "Safari", "window_title": "PG&E - Sign in", "url": "https://www.pge.com/", "screen_text": "Sign in to pay your bill · Amount due: $187.42 · Due Jun 17, 2026" },
+      { "i": 1, "t": "2026-06-13T08:16:30Z", "event": "text_snapshot", "app": "Safari", "window_title": "PG&E - Verify identity", "url": "https://www.pge.com/verify", "screen_text": "We sent a 6-digit code to (•••) •••-4821 · Enter code: ___" },
+      { "i": 2, "t": "2026-06-13T08:17:10Z", "event": "app_focus", "app": "Slack", "window_title": "#standup - Acme", "screen_text": "standup starting, join the huddle" },
+      { "i": 3, "t": "2026-06-13T09:30:00Z", "event": "app_focus", "app": "Xcode", "window_title": "MyApp.xcodeproj", "screen_text": "Indexing | Processing files" }
+    ]
+  },
+  "expected": {
+    "open_loops": [
+      {
+        "intent_gold": "Pay the PG&E bill ($187.42) — stopped at the verification-code screen",
+        "intent_must_include": ["PG&E"],
+        "category": "payment_or_admin",
+        "progress_must_include": ["$187.42", "code"],
+        "artifacts_must_include_urls": ["https://www.pge.com/"],
+        "draft_must_be_preserved": null,
+        "deadline": "2026-06-17",
+        "next_action_keywords": ["pay", "code", "verify"]
+      }
+    ],
+    "must_not_detect": ["standup as a loop"]
+  }
+}
